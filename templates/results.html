@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogAnalyzer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body class="container">
+    <header class="text-center my-4">
+        <!-- <img src="/static/images/icon.png" alt="LogAnalyzer Pro" class="img-fluid">-->
+        <h1 class="mt-3">LogAnalyzer</h1>
+        
+    </header>
+
+
+    <section class="analysis-panel bg-light p-4 mb-4 rounded shadow">
+        <h2 class="sub-heading mb-4">Top 10 Páginas Mais Acessadas</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo de Requisição</th>
+                        <th>Página</th>
+                        <th>Número de Acessos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for (request_type, page), access_count in top_pages %}
+                    <tr>
+                        <td>{{ request_type }}</td>
+                        <td>{{ page }}</td>
+                        <td>{{ access_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+
+        <h2 class="sub-heading mb-4">Top 10 Endereços IP</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Endereço IP</th>
+                        <th>Número de Conexões</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ip, connection_count in top_ips %}
+                    <tr>
+                        <td>{{ ip }}</td>
+                        <td>{{ connection_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="sub-heading mb-4">Códigos de Status</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Código de Status</th>
+                        <th>Número de Ocorrências</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for status_code, count in status_codes %}
+                    <tr>
+                        <td>{{ status_code }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="sub-heading mb-4">Estatísticas de Tamanho de Pacotes</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Mínimo: {{ min_packet_size }}</li>
+            <li class="list-group-item">Médio: {{ avg_packet_size }}</li>
+            <li class="list-group-item">Máximo: {{ max_packet_size }}</li>
+        </ul>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>
